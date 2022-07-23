@@ -1,21 +1,20 @@
 import { createEffect, createSignal } from "solid-js"
+import { userID, setUserID, login, setLogin, user, setUser } from '../App';
 
-const [key, setKey] = createSignal('8C2D5E3E6307727E59F59B93ACC58BC2')
-
+const [id, setID] = createSignal('')
 const Home = () => {
     createEffect(async()=>{
-        const res = await fetch(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${key()}&steamids=76561198360075763`,
-            {
-            mode: 'cors',
-            headers: {
-              'Access-Control-Allow-Origin':'*'
-            }})
-        // const data = await res.json()
-        console.log(res.json())
+        const res = await fetch(`https://note-the-project-n.herokuapp.com/steam/getinfo?type=gamelist`)
+        const data = await res.json()
+        console.log(data)
     })
+    console.log(user())
+    let userData = user()
     return (
         <div>
             <h2>Home</h2>
+            <h5>{user()[0].personaname}</h5>
+            <img src={user()[0].avatarfull}></img>
         </div>
     )
 }
